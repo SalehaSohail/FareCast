@@ -1,3 +1,31 @@
+
+"""
+Data Dump Script
+-----------------
+This script reads flight fare data from an Excel file and inserts it into
+a MongoDB database.
+
+Why this conversion is needed:
+Excel stores data in a tabular format (rows and columns). MongoDB, however,
+is a document-based database — it stores data as a collection of documents,
+similar to a list of dictionaries in Python, where each document represents
+one record (key-value pairs).
+
+How the conversion works:
+- df.to_json(orient="records") converts the DataFrame into a JSON string,
+  where each row becomes a separate dictionary and all rows together form
+  a list of dictionaries.
+- json.loads() then parses that JSON string back into an actual Python
+  list of dictionaries (since to_json() only returns a string, not a
+  usable Python object).
+
+This list of dictionaries is exactly the format insert_many() requires,
+since that is how MongoDB stores and works with data.
+"""
+
+
+
+
 import pymongo
 import json 
 import pandas as pd
